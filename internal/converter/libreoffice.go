@@ -15,6 +15,17 @@ func (c *Converter) Convert(ctx context.Context, inputPath, target, outDir strin
 		return "", err
 	}
 
+	if strings.EqualFold(filepath.Ext(inputPath), ".pdf") {
+		switch target {
+		case "docx":
+			return c.pdfToDocx(ctx, inputPath, outDir)
+		case "pptx":
+			return c.pdfToPptx(ctx, inputPath, outDir)
+		case "xlsx":
+			return c.pdfToXlsx(ctx, inputPath, outDir)
+		}
+	}
+
 	ctx, cancel := context.WithTimeout(ctx, c.cfg.ConvertTimeout)
 	defer cancel()
 

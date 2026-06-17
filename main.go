@@ -57,6 +57,9 @@ func main() {
 		log.Println("WARNING: API_KEY is empty — authentication is DISABLED. Set API_KEY before exposing this service.")
 	}
 	log.Printf("docflow-backend listening on :%s (soffice=%q, workdir=%q)", cfg.Port, cfg.SofficeBin, cfg.WorkDir)
+	for _, r := range srv.Routes() {
+		log.Printf("  route: %s", r)
+	}
 
 	if err := httpServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		log.Fatalf("server error: %v", err)

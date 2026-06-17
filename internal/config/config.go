@@ -11,6 +11,7 @@ type Config struct {
 	Port           string
 	APIKey         string
 	SofficeBin     string
+	PythonBin      string
 	WorkDir        string
 	MaxUploadBytes int64
 	ConvertTimeout time.Duration
@@ -21,6 +22,7 @@ func Load() Config {
 		Port:           env("PORT", "8080"),
 		APIKey:         env("API_KEY", ""),
 		SofficeBin:     env("SOFFICE_BIN", "soffice"),
+		PythonBin:      env("PYTHON_BIN", "python3"),
 		WorkDir:        env("WORK_DIR", filepath.Join(os.TempDir(), "docflow")),
 		MaxUploadBytes: int64(envInt("MAX_UPLOAD_MB", 50)) * 1024 * 1024,
 		ConvertTimeout: time.Duration(envInt("CONVERT_TIMEOUT_SEC", 120)) * time.Second,

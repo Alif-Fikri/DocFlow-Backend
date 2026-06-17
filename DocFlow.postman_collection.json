@@ -1,0 +1,130 @@
+{
+  "info": {
+    "name": "DocFlow Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "api_key",
+      "value": "your-api-key-here"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/health"
+      }
+    },
+    {
+      "name": "Convert Document",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/convert",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{api_key}}"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": ""
+            },
+            {
+              "key": "target",
+              "value": "pdf",
+              "type": "text",
+              "description": "Target format: pdf, docx, xlsx, pptx, txt, odt, ods, odp, rtf, csv, html"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PDF Merge",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/pdf/merge",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{api_key}}"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "files",
+              "type": "file",
+              "src": "",
+              "description": "PDF pertama"
+            },
+            {
+              "key": "files",
+              "type": "file",
+              "src": "",
+              "description": "PDF kedua (minimal 2 file)"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PDF Split",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/pdf/split",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{api_key}}"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PDF Compress",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/pdf/compress",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{api_key}}"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": ""
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

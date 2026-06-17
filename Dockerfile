@@ -13,7 +13,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/docflow
 # ---- runtime stage ----
 FROM debian:bookworm-slim
 
-# LibreOffice (headless) + fonts for faithful rendering.
 RUN apt-get update && apt-get install -y --no-install-recommends \
         libreoffice-core \
         libreoffice-writer \
@@ -22,12 +21,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         fonts-liberation \
         fonts-dejavu \
         ca-certificates \
+        python3 \
+        python3-pip \
+        libgl1 \
+        libglib2.0-0 \
+    && pip3 install --no-cache-dir --break-system-packages \
+        pdf2docx "PyMuPDF<1.24" python-pptx pdfplumber openpyxl \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /out/docflow-backend /usr/local/bin/docflow-backend
 
 ENV PORT=8080 \
     SOFFICE_BIN=soffice \
+    PYTHON_BIN=python3 \
     WORK_DIR=/tmp/docflow
 
 RUN useradd --create-home --uid 10001 app \
