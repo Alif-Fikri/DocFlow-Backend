@@ -1,0 +1,11 @@
+.git
+.gitignore
+*.md
+.env
+.env.*
+bin/
+tmp/
+*.pdf
+*.docx
+*.xlsx
+*.pptx

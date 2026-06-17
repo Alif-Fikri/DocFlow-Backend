@@ -1,0 +1,21 @@
+# Binaries
+/bin/
+/docflow-backend
+docflow-backend
+
+# Env
+.env
+.env.local
+
+# Scratch / test artifacts
+/tmp/
+*.pdf
+*.docx
+*.xlsx
+*.pptx
+!testdata/**
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
