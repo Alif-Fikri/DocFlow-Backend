@@ -4,11 +4,20 @@
 FROM golang:1.23-bookworm AS build
 WORKDIR /src
 
+# Constrain Go's parallelism/memory so the build doesn't get OOM-killed
+# (exit 137) on memory-limited build runners.
+ENV GOMAXPROCS=2 \
+    GOMEMLIMIT=384MiB
+
 COPY go.mod go.sum ./
-RUN go mod download
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    go mod download
 
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/docflow-backend .
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/docflow-backend .
 
 # ---- runtime stage ----
 FROM debian:bookworm-slim
