@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(go build *)"
+      "Bash(go build *)",
+      "Bash(openssl rand *)",
+      "Bash(curl -s -m 20 -w \"\\\\n[HTTP %{http_code}]\\\\n\" https://docflow-backend-production.up.railway.app/health)"
+    ],
+    "additionalDirectories": [
+      "/Users/suitenmac/DocFlow/lib/core"
     ]
   }
 }

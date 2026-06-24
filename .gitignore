@@ -19,3 +19,5 @@ docflow-backend
 .DS_Store
 .idea/
 .vscode/
+.claude/
+.claude
